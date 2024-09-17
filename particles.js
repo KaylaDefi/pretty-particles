@@ -1,39 +1,27 @@
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 
-function resizeCanvas() {
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', function() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   initParticles();
-}
-
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+});
 
 let particlesArray = [];
-let numberOfParticles = window.innerWidth < 768 ? 80 : 150; // Fewer particles on mobile
+const numberOfParticles = 150; 
 
 let mouse = {
   x: null,
   y: null,
-  radius: window.innerWidth < 768 ? 50 : 100 // Smaller interaction radius on mobile
+  radius: 100 
 };
 
-// Mouse event for desktop
 window.addEventListener('mousemove', function(event) {
   mouse.x = event.x;
   mouse.y = event.y;
-});
-
-// Touch event for mobile
-window.addEventListener('touchmove', function(event) {
-  mouse.x = event.touches[0].clientX;
-  mouse.y = event.touches[0].clientY;
-});
-
-window.addEventListener('touchend', function() {
-  mouse.x = null;
-  mouse.y = null;
 });
 
 class Particle {
@@ -53,6 +41,7 @@ class Particle {
     ctx.fill();
   }
 
+ 
   update() {
     this.x += this.speedX;
     this.y += this.speedY;
@@ -71,14 +60,14 @@ class Particle {
 
     if (distance < mouse.radius) {
       if (mouse.x < this.x) {
-        this.x += 3;
+        this.x += 3; 
       } else {
-        this.x -= 3;
+        this.x -= 3; 
       }
       if (mouse.y < this.y) {
-        this.y += 3;
+        this.y += 3; 
       } else {
-        this.y -= 3;
+        this.y -= 3; 
       }
     }
 
@@ -100,7 +89,7 @@ function initParticles() {
 }
 
 function animateParticles() {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; 
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   particlesArray.forEach(particle => particle.update());
